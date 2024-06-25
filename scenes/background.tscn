@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://xq0a6xvieh3q"]
+
+[sub_resource type="Shader" id="1"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform vec2 offset = vec2(0.0);
+
+
+float rand(vec2 coord) {
+	return fract(sin(dot(coord.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+vec2 rotate(vec2 coord, float angle){
+	coord -= 0.5;
+	coord *= mat2(vec2(cos(angle),-sin(angle)),vec2(sin(angle),cos(angle)));
+	return coord + 0.5;
+}
+
+void fragment() {
+	vec2 uv = rotate(UV, TIME * 0.2);
+
+	vec4 col = vec4(1.0) + rand(UV + vec2(TIME*0.0000001,0.0)) * 0.03;
+	
+	col = col* vec4(
+		abs(sin(uv.x * cos(offset.x)+ TIME * 0.105)),
+		abs(sin((cos(uv.x + uv.y) + cos(offset.x + offset.y) + TIME * 0.059))) ,
+		abs(cos(uv.y * sin(offset.y) + TIME * 0.0253)) ,
+		1.0);
+
+	COLOR = col;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t7er4"]
+shader = SubResource("1")
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ivhu7"]
+particles_animation = true
+particles_anim_h_frames = 11
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m0nwf"]
+emission_shape = 3
+emission_box_extents = Vector3(187, 333, 1)
+orbit_velocity_min = 10.0
+orbit_velocity_max = 10.0
+gravity = Vector3(0, 20, 0)
+scale_min = 3.0
+scale_max = 3.0
+
+[node name="background" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Light3D" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_t7er4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dark" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.831373)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.513726)
+material = SubResource("CanvasItemMaterial_ivhu7")
+position = Vector2(187, -100)
+amount = 500
+process_material = SubResource("ParticleProcessMaterial_m0nwf")
+lifetime = 50.0
+preprocess = 50.0

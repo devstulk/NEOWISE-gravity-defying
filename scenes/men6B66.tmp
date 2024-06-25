@@ -1,0 +1,265 @@
+[gd_scene load_steps=4 format=3 uid="uid://6y5wir75g0s8"]
+
+[ext_resource type="PackedScene" uid="uid://xq0a6xvieh3q" path="res://scenes/background.tscn" id="1_q1lhq"]
+[ext_resource type="FontFile" uid="uid://ctarhy48yiein" path="res://fonts/LazyFox Pixel Font 4.ttf" id="2_8fhw6"]
+
+[sub_resource type="GDScript" id="GDScript_y6mpj"]
+script/source = "extends CanvasLayer
+
+signal start_game
+
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	pass
+
+
+func _on_credits_pressed():
+	box_container_center.hide()
+	rich_text_label_credits.show()
+
+func _on_back_to_menu_credits_pressed():
+	box_container_center.show()
+	rich_text_label_credits.hide()
+
+func _on_exit_pressed():
+	get_tree().quit()
+
+func _on_score_pressed():
+	box_container_center.hide()
+	rich_text_label_score.show()
+
+func _on_back_to_menu_score_pressed():
+	box_container_center.show()
+	rich_text_label_score.hide()
+
+func _on_new_game_pressed():
+	hide()
+	start_game.emit()
+
+# Redirect user to navigator when click in a credit link.
+func _on_rich_text_label_credits_meta_clicked(meta):
+	OS.shell_open(str(meta))
+"
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_y6mpj")
+
+[node name="background" parent="." instance=ExtResource("1_q1lhq")]
+layout_mode = 1
+offset_right = -6.10352e-05
+
+[node name="BoxContainerTitle" type="BoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 48.0
+offset_bottom = 195.0
+grow_horizontal = 2
+vertical = true
+
+[node name="SubTitle" type="Label" parent="BoxContainerTitle"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 100
+text = "NEOWISE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BoxContainerSubTitle" type="BoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 120.0
+offset_bottom = 224.0
+grow_horizontal = 2
+vertical = true
+
+[node name="SubTitle" type="Label" parent="BoxContainerSubTitle"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 50
+text = "gravity defying
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BoxContainerCenter" type="BoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -50.5
+offset_bottom = 188.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BoxContainerCenter"]
+layout_mode = 2
+
+[node name="NewGame" type="Button" parent="BoxContainerCenter/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0871841, 0.304444, 1.44392e-07, 1)
+theme_override_colors/font_hover_color = Color(0.219608, 0.639216, 0, 1)
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 35
+text = "New Game"
+flat = true
+
+[node name="Score" type="Button" parent="BoxContainerCenter/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0871841, 0.304444, 1.44392e-07, 1)
+theme_override_colors/font_hover_color = Color(0.219608, 0.639216, 0, 1)
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 35
+text = "Score"
+flat = true
+
+[node name="Credits" type="Button" parent="BoxContainerCenter/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0871841, 0.304444, 1.44392e-07, 1)
+theme_override_colors/font_hover_color = Color(0.219608, 0.639216, 0, 1)
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 35
+text = "Credits"
+flat = true
+
+[node name="Exit" type="Button" parent="BoxContainerCenter/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0871841, 0.304444, 1.44392e-07, 1)
+theme_override_colors/font_hover_color = Color(0.219608, 0.639216, 0, 1)
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 35
+text = "Exit"
+flat = true
+
+[node name="RichTextLabelCredits" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -333.5
+offset_right = -10.0
+offset_bottom = 333.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/normal_font = ExtResource("2_8fhw6")
+theme_override_fonts/bold_font = ExtResource("2_8fhw6")
+theme_override_fonts/italics_font = ExtResource("2_8fhw6")
+theme_override_fonts/bold_italics_font = ExtResource("2_8fhw6")
+theme_override_fonts/mono_font = ExtResource("2_8fhw6")
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 25
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 25
+theme_override_font_sizes/mono_font_size = 20
+bbcode_enabled = true
+text = "
+
+
+
+
+
+[center]
+[b]Credits:[/b]
+
+[b]Pixel Planet Generator:[/b]
+Created by [url=https://deep-fold.itch.io]Deep Fold[/url]
+
+[b]Character sprite:[/b]
+Created by [url=https://dizabanik.itch.io]Dizabanik[/url]
+
+[b]Texts font:[/b]
+Created by [url=https://lazy-fox.itch.io]Lazy Fox[/url]
+
+We sincerely thank the talented artists who have made these resources freely available to the game development community. Your contributions were essential to the creation of this project.
+[/center]
+"
+
+[node name="BackToMenuCredits" type="Button" parent="RichTextLabelCredits"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_right = 4.0
+offset_bottom = 72.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0871841, 0.304444, 1.44392e-07, 1)
+theme_override_colors/font_hover_color = Color(0.219608, 0.639216, 0, 1)
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 50
+text = "X"
+flat = true
+alignment = 2
+
+[node name="BoxContainerBottom" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.5
+offset_top = -44.0
+offset_right = 96.5
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="MadeBy" type="Label" parent="BoxContainerBottom"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 25
+text = "Made by "
+
+[node name="Author2" type="LinkButton" parent="BoxContainerBottom"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0871841, 0.304444, 1.44392e-07, 1)
+theme_override_colors/font_hover_color = Color(0.219608, 0.639216, 0, 1)
+theme_override_fonts/font = ExtResource("2_8fhw6")
+theme_override_font_sizes/font_size = 25
+text = "DevStulk"
+underline = 1
+uri = "https://devstulk.itch.io/"
