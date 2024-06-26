@@ -6,7 +6,7 @@ NEOWISE: gravity defying is a game where you control an astronaut who needs to j
 
 In the game, planets descend across the screen and you must use the controls to move the astronaut from one planet to another. Every second you stay alive adds 1 point to your score. If you fall the game ends.
 
-## Objetivo 🎯
+## Goal 🎯
 
 The objective is to survive as long as possible and accumulate the most points, jumping from planet to planet.
 
