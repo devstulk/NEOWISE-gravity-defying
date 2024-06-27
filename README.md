@@ -18,8 +18,6 @@ The objective is to survive as long as possible and accumulate the most points, 
 4. Extract the contents of the .zip file onto your computer.
 5. Open the extracted folder and run the `NEOWISE.exe` file to launch the game.
 
-Note: If you choose to play using the executable, it will create a file called `best_score.cfg` to save your highest score achieved in the game.
-
 #### Controls
 
 - :arrow_left: Movement to the Left: 'A' key or left arrow on the keyboard
